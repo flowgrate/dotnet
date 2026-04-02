@@ -1,10 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Flowgrate</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>flowgrate</Authors>
+    <Description>Laravel-style database migrations for .NET. Fluent C# API that generates a JSON manifest consumed by the Flowgrate CLI.</Description>
+    <PackageTags>migrations;database;schema;fluent;laravel;postgresql</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/flowgrate/dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/flowgrate/dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

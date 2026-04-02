@@ -1,0 +1,41 @@
+name: Publish to NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    name: Pack & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Test
+        run: dotnet test --no-restore /v:m
+
+      - name: Extract version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
+      - name: Pack
+        run: |
+          dotnet pack Flowgrate/Flowgrate.csproj \
+            --no-restore \
+            -c Release \
+            -p:Version=${{ env.VERSION }} \
+            -o ./nupkg
+
+      - name: Push to NuGet
+        run: |
+          dotnet nuget push ./nupkg/*.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
