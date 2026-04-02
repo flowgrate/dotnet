@@ -6,6 +6,20 @@ C# SDK for [Flowgrate](https://github.com/flowgrate/core) — Laravel-style data
 
 Define migrations in C# using the fluent Blueprint API. The SDK serializes them to JSON and pipes to the Flowgrate CLI, which compiles and executes the SQL.
 
+## Requirements
+
+- [Flowgrate CLI](https://github.com/flowgrate/core/releases) — download the binary for your platform and put it on your `PATH`
+
+```bash
+# Linux / macOS
+curl -L https://github.com/flowgrate/core/releases/latest/download/flowgrate-linux-amd64 -o flowgrate
+chmod +x flowgrate
+sudo mv flowgrate /usr/local/bin/
+
+# Or build from source
+go install github.com/flowgrate/core@latest
+```
+
 ## Setup
 
 **1. Reference the SDK in your migrations project:**
