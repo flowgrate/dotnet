@@ -25,6 +25,14 @@ FlowgrateRunner.Run(Assembly.GetExecutingAssembly());
 
 **3. Create `flowgrate.yml` next to your project:**
 
+Generate it with the CLI (recommended):
+
+```bash
+flowgrate init --db=postgres://user:pass@localhost/mydb
+```
+
+Or create manually:
+
 ```yaml
 database:
   url: postgres://user:pass@localhost/mydb
