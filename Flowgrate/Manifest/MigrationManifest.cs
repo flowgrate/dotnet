@@ -28,6 +28,10 @@ public record ManifestColumn(
     string ColumnAction = "add",
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     int? Length = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    int? Precision = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    int? Scale = null,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     bool Nullable = false,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
@@ -36,6 +40,8 @@ public record ManifestColumn(
     bool AutoIncrement = false,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     object? Default = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? DefaultExpression = null,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     string? Comment = null
 );

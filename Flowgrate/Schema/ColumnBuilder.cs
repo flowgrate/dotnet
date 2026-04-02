@@ -21,9 +21,22 @@ public class ColumnBuilder
     public ColumnBuilder Default(object value)
     {
         _column.HasDefault = true;
+        _column.IsDefaultExpression = false;
         _column.DefaultValue = value;
         return this;
     }
+
+    /// <summary>Sets a raw SQL expression as the column default (e.g. gen_random_uuid(), NOW()).</summary>
+    public ColumnBuilder DefaultExpression(string expression)
+    {
+        _column.HasDefault = true;
+        _column.IsDefaultExpression = true;
+        _column.DefaultValue = expression;
+        return this;
+    }
+
+    /// <summary>Sets DEFAULT gen_random_uuid() on a UUID column.</summary>
+    public ColumnBuilder GeneratedUuid() => DefaultExpression("gen_random_uuid()");
 
     public ColumnBuilder Comment(string comment)
     {
@@ -57,11 +70,31 @@ public class ColumnBuilder
         return this;
     }
 
-    // Методы установки типа — для использования после AddColumn / ChangeColumn
+    // Convenience: add a single-column unique index
+    public ColumnBuilder Unique()
+    {
+        _blueprint.Indexes.Add(new IndexDefinition { Columns = [_column.Name], IsUnique = true });
+        return this;
+    }
+
+    // --- Type setters (for use after AddColumn / ChangeColumn) ---
+
     public ColumnBuilder String(int length = 255)
     {
         _column.Type = ColumnType.String;
         _column.Length = length;
+        return this;
+    }
+
+    public ColumnBuilder Text()
+    {
+        _column.Type = ColumnType.Text;
+        return this;
+    }
+
+    public ColumnBuilder SmallInteger()
+    {
+        _column.Type = ColumnType.SmallInteger;
         return this;
     }
 
@@ -77,21 +110,72 @@ public class ColumnBuilder
         return this;
     }
 
+    public ColumnBuilder Decimal(int precision = 8, int scale = 2)
+    {
+        _column.Type = ColumnType.Decimal;
+        _column.Precision = precision;
+        _column.Scale = scale;
+        return this;
+    }
+
     public ColumnBuilder Float()
     {
         _column.Type = ColumnType.Float;
         return this;
     }
 
-    public ColumnBuilder Text()
+    public ColumnBuilder Double()
     {
-        _column.Type = ColumnType.Text;
+        _column.Type = ColumnType.Double;
         return this;
     }
 
     public ColumnBuilder Boolean()
     {
         _column.Type = ColumnType.Boolean;
+        return this;
+    }
+
+    public ColumnBuilder Date()
+    {
+        _column.Type = ColumnType.Date;
+        return this;
+    }
+
+    public ColumnBuilder Time()
+    {
+        _column.Type = ColumnType.Time;
+        return this;
+    }
+
+    public ColumnBuilder Timestamp()
+    {
+        _column.Type = ColumnType.Timestamp;
+        return this;
+    }
+
+    public ColumnBuilder Uuid()
+    {
+        _column.Type = ColumnType.Uuid;
+        return this;
+    }
+
+    public ColumnBuilder Json()
+    {
+        _column.Type = ColumnType.Json;
+        return this;
+    }
+
+    /// <summary>Binary JSON with indexing. PostgreSQL only.</summary>
+    public ColumnBuilder Jsonb()
+    {
+        _column.Type = ColumnType.Jsonb;
+        return this;
+    }
+
+    public ColumnBuilder Binary()
+    {
+        _column.Type = ColumnType.Binary;
         return this;
     }
 }

@@ -63,10 +63,13 @@ public static class ManifestSerializer
             _ => "add"
         },
         Length: col.Length,
+        Precision: col.Precision,
+        Scale: col.Scale,
         Nullable: col.IsNullable,
         Primary: col.IsPrimary,
         AutoIncrement: col.IsAutoIncrement,
-        Default: col.HasDefault ? col.DefaultValue : null,
+        Default: col.HasDefault && !col.IsDefaultExpression ? col.DefaultValue : null,
+        DefaultExpression: col.HasDefault && col.IsDefaultExpression ? col.DefaultValue?.ToString() : null,
         Comment: col.Comment
     );
 
@@ -86,14 +89,22 @@ public static class ManifestSerializer
 
     private static string ColumnTypeToString(ColumnType type) => type switch
     {
-        ColumnType.String => "string",
-        ColumnType.Text => "text",
-        ColumnType.Integer => "integer",
-        ColumnType.BigInteger => "big_integer",
-        ColumnType.Float => "float",
-        ColumnType.Boolean => "boolean",
-        ColumnType.Date => "date",
-        ColumnType.Timestamp => "timestamp",
+        ColumnType.String      => "string",
+        ColumnType.Text        => "text",
+        ColumnType.SmallInteger => "small_integer",
+        ColumnType.Integer     => "integer",
+        ColumnType.BigInteger  => "big_integer",
+        ColumnType.Decimal     => "decimal",
+        ColumnType.Float       => "float",
+        ColumnType.Double      => "double",
+        ColumnType.Boolean     => "boolean",
+        ColumnType.Date        => "date",
+        ColumnType.Time        => "time",
+        ColumnType.Timestamp   => "timestamp",
+        ColumnType.Uuid        => "uuid",
+        ColumnType.Json        => "json",
+        ColumnType.Jsonb       => "jsonb",
+        ColumnType.Binary      => "binary",
         _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
     };
 }
