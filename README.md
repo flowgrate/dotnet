@@ -11,8 +11,18 @@ Define migrations in C# using the fluent Blueprint API. The SDK serializes them 
 - [Flowgrate CLI](https://github.com/flowgrate/core/releases) — download the binary for your platform and put it on your `PATH`
 
 ```bash
-# Linux / macOS
+# Linux (amd64)
 curl -L https://github.com/flowgrate/core/releases/latest/download/flowgrate-linux-amd64 -o flowgrate
+chmod +x flowgrate
+sudo mv flowgrate /usr/local/bin/
+
+# macOS (Apple Silicon)
+curl -L https://github.com/flowgrate/core/releases/latest/download/flowgrate-darwin-arm64 -o flowgrate
+chmod +x flowgrate
+sudo mv flowgrate /usr/local/bin/
+
+# macOS (Intel)
+curl -L https://github.com/flowgrate/core/releases/latest/download/flowgrate-darwin-amd64 -o flowgrate
 chmod +x flowgrate
 sudo mv flowgrate /usr/local/bin/
 
